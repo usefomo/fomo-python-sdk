@@ -8,7 +8,7 @@ API docs: `http://docs.usefomo.com/reference <http://docs.usefomo.com/reference>
 Requirements
 ------------
 
-- PHP Version 2.7+
+- Python version [2.7+, 3.x+]
 - pyOpenSSL / OpenSSL with SNI support
 - Python module `requests <http://python-requests.org>`_
 
@@ -25,9 +25,9 @@ Install the latest version with
 Manual User Installation
 ------------------------
 
-Download `Fomo/fomo.py <Fomo/fomo.py>`_ and include the file in your Python project.
+Download `Fomo/fomo.py <https://github.com/usefomo/fomo-python-sdk/blob/master/Fomo/fomo.py>`_ and include the file in your Python project.
 
-Check out our examples in `tests/test.py <tests/test.py>`_, quick usage examples:
+Check out our examples in `tests/test.py <https://github.com/usefomo/fomo-python-sdk/blob/master/tests/test.py>`_, quick usage examples:
 
 Basic Usage
 -----------
