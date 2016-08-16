@@ -5,13 +5,15 @@ Fomo Python SDK
 
 API docs: `http://docs.usefomo.com/reference <http://docs.usefomo.com/reference>`_
 
-## Requirements
+Requirements
+------------
 
 - PHP Version 2.7+
 - pyOpenSSL / OpenSSL with SNI support
 - Python module `requests <http://python-requests.org>`_
 
-## Installation
+Installation
+------------
 
 Install the latest version with
 
@@ -19,13 +21,15 @@ Install the latest version with
 $ pip install fomo
 
 
-## Manual User Installation
+Manual User Installation
+------------------------
 
 Download `Fomo/fomo.py <Fomo/fomo.py>`_ and include the file in your Python project.
 
 Check out our examples in `tests/test.py <tests/test.py>`_, quick usage examples:
 
-## Basic Usage
+Basic Usage
+-----------
 
 Initialize Fomo client via:
 
@@ -80,7 +84,7 @@ To update an event:
     updated_event = client.update_event(event)
     print(updated_event)
 
-
-## Support
+Support
+-------
 
 If you have questions, email us at `hello@usefomo.com <mailto:hello@usefomo.com>`_.
