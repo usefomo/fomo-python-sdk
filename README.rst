@@ -18,7 +18,8 @@ Installation
 Install the latest version with
 
 .. code-block:: bash
-$ pip install fomo
+
+    $ pip install fomo
 
 
 Manual User Installation
