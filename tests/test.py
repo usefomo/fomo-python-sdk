@@ -22,9 +22,13 @@ class TestFomo(unittest.TestCase):
         new_event.title = 'Test event'
         new_event.city = 'San Francisco'
         new_event.url = 'https://www.usefomo.com'
+        # Add event custom attribute value
+        new_event.add_custom_event_field('variable_name', 'value')
         created_event = client.create_event(new_event)
         self.assertIsNotNone(created_event)
         self.assertIsNotNone(created_event.id)
+        self.assertEqual('variable_name', created_event.custom_event_fields_attributes[0]['key'])
+        self.assertEqual('value', created_event.custom_event_fields_attributes[0]['value'])
 
         # Get created event
         event = client.get_event(created_event.id)
@@ -36,8 +40,11 @@ class TestFomo(unittest.TestCase):
 
         # Update event
         event.first_name = 'John'
+        event.custom_event_fields_attributes[0]['value'] = 'changed_value'
         updated_event = client.update_event(event)
         self.assertEqual(updated_event.first_name, event.first_name)
+        self.assertEqual('variable_name', updated_event.custom_event_fields_attributes[0]['key'])
+        self.assertEqual('changed_value', updated_event.custom_event_fields_attributes[0]['value'])
 
         # Delete event
         event_delete_response = client.delete_event(event.id)

@@ -1,5 +1,5 @@
 Fomo Python SDK
-================
+===============
 
 *Fomo Python SDK* is the official SDK wrapper for the `Fomo API service <https://www.usefomo.com>`_
 
@@ -49,6 +49,10 @@ To create a new event:
     event.title = 'Test event'
     event.city = 'San Francisco'
     event.url = 'https://www.usefomo.com'
+
+    # Add event custom attribute value
+    event.add_custom_event_field('variable_name', 'value')
+
     created_event = client.create_event(event)
     print(created_event)
 

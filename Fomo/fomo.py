@@ -1,4 +1,5 @@
 import json
+
 import requests
 
 try:
@@ -58,7 +59,7 @@ class FomoClient:
         :rtype: FomoEvent
 
         """
-        return FomoEvent.from_json(self.__makeRequest('/api/v1/applications/me/events', 'POST', event))
+        return FomoEvent.from_json(self.__makeRequest('/api/v1/applications/me/events', 'POST', FomoEventWrapper(event)))
 
     def update_event(self, event):
         """Update Fomo Event
@@ -70,7 +71,7 @@ class FomoClient:
 
         """
         return FomoEvent.from_json(
-            self.__makeRequest('/api/v1/applications/me/events/' + repr(event.id), 'PATCH', event))
+            self.__makeRequest('/api/v1/applications/me/events/' + repr(event.id), 'PATCH', FomoEventWrapper(event)))
 
     def __makeRequest(self, path, method, data=None):
         """Make Fomo Authorized API request
@@ -80,7 +81,7 @@ class FomoClient:
         @:param method: HTTP method
         @type method: string
         @:param data: Dictionary of data to be send to server
-        @type data: dict
+        @type data: FomoEventWrapper
 
         """
         headers = {'Authorization': 'Token ' + self.__token}
@@ -88,10 +89,9 @@ class FomoClient:
             headers['Content-Type'] = 'application/json'
 
         response = requests.request(method, self.__endpoint + path,
-                                    data=json.dumps(data.__dict__) if data is not None else None,
+                                    data=data.to_JSON() if data is not None else None,
                                     headers=headers)
         return response.text
-
 
 class FomoEventCustomAttribute(object):
     """Custom event attribute"""
@@ -157,6 +157,14 @@ class FomoEventBasic(object):
         json_dict = json.loads(json_str)
         return cls(**json_dict)
 
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
 
 class FomoEvent(FomoEventBasic):
     """Fomo event"""
@@ -211,6 +219,14 @@ class FomoEvent(FomoEventBasic):
 
         return FomoEventList(event_list)
 
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
 
 class FomoEventList(list):
     """List of Fomo Events"""
@@ -227,6 +243,14 @@ class FomoEventList(list):
 
         """
         return item
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
 
 
 class FomoDeleteMessageResponse(object):
@@ -246,3 +270,35 @@ class FomoDeleteMessageResponse(object):
         """Parse object from JSON"""
         json_dict = json.loads(json_str)
         return cls(**json_dict)
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
+class FomoEventWrapper(object):
+    def __init__(self, event=None):
+        """Initializes Fomo Event wrapper"""
+        #: Event
+        self.event = event
+
+    def __str__(self):
+        """Dumps JSON serialized object"""
+        return json.dumps(self.__dict__, indent=4)
+
+    @classmethod
+    def from_json(cls, json_str):
+        """Parse object from JSON"""
+        json_dict = json.loads(json_str)
+        return cls(**json_dict)
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
