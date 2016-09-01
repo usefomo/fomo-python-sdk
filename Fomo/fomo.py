@@ -112,12 +112,15 @@ class FomoEventCustomAttribute(object):
 class FomoEventBasic(object):
     """Fomo basic event"""
 
-    def __init__(self, event_type_id="", url="", first_name="", city="", province="", country="", title="",
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="", title="",
                  image_url="", custom_event_fields_attributes=[]):
         """Create a new Fomo basic event"""
 
-        #: Event type unique ID (required)
+        #: Event type unique ID (optional|required if event_type_tag = '')
         self.event_type_id = event_type_id
+
+        #: Event type tag (optional|required if event_type_id = '')
+        self.event_type_tag = event_type_tag
 
         #: Url to redirect on the event click. Size range: 0..255 (required)
         self.url = url
@@ -169,13 +172,13 @@ class FomoEventBasic(object):
 class FomoEvent(FomoEventBasic):
     """Fomo event"""
 
-    def __init__(self, event_type_id="", url="", first_name="", city="", province="", country="", title="",
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="", title="",
                  image_url="", custom_event_fields_attributes=None, id="", created_at="", updated_at="", message="",
                  link="", application_id="", created_at_to_seconds_from_epoch=None):
         """Creates new Fomo event object"""
         if custom_event_fields_attributes is None:
             custom_event_fields_attributes = []
-        FomoEventBasic.__init__(self, event_type_id, url, first_name, city, province, country, title, image_url,
+        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, city, province, country, title, image_url,
                                 custom_event_fields_attributes)
 
         #: Id of the event type (needed only for the update)

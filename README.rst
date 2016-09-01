@@ -37,15 +37,31 @@ Initialize Fomo client via:
 .. code-block:: python
 
     import Fomo
-    client = Fomo.FomoClient('<token>') # Auth token can be found Fomo application admin dashboard (App -> API Access)
+    client = Fomo.FomoClient('<token>')  # Auth token can be found Fomo application admin dashboard (App -> API Access)
 
 
-To create a new event:
+To create a new event with template name:
 
 .. code-block:: python
 
     event = Fomo.FomoEventBasic()
-    event.event_type_id = '183' # Event type ID is found on Fomo dashboard (Templates -> Template ID)
+    event.event_type_tag = 'new-order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
+    event.title = 'Test event'
+    event.city = 'San Francisco'
+    event.url = 'https://www.usefomo.com'
+
+    # Add event custom attribute value
+    event.add_custom_event_field('variable_name', 'value')
+
+    created_event = client.create_event(event)
+    print(created_event)
+
+or with template ID:
+
+.. code-block:: python
+
+    event = Fomo.FomoEventBasic()
+    event.event_type_id = '183'  # Event type ID is found on Fomo dashboard (Templates -> Template ID)
     event.title = 'Test event'
     event.city = 'San Francisco'
     event.url = 'https://www.usefomo.com'
