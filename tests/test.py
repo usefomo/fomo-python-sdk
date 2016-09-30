@@ -18,7 +18,7 @@ class TestFomo(unittest.TestCase):
 
         # Create event with template name
         new_event = Fomo.FomoEventBasic()
-        new_event.event_type_tag = 'new-order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
+        new_event.event_type_tag = 'new_order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
         new_event.title = 'Test event'
         new_event.city = 'San Francisco'
         new_event.url = 'https://www.usefomo.com'
@@ -31,14 +31,14 @@ class TestFomo(unittest.TestCase):
         self.assertEqual('value', created_event.custom_event_fields_attributes[0]['value'])
 
         # Create event with template ID
-        new_event = Fomo.FomoEventBasic()
-        new_event.event_type_id = '183'  # Event type ID is found on Fomo dashboard (Templates -> Template ID)
-        new_event.title = 'Test event'
-        new_event.city = 'San Francisco'
-        new_event.url = 'https://www.usefomo.com'
+        new_event2 = Fomo.FomoEventBasic()
+        new_event2.event_type_id = '1894'  # Event type ID is found on Fomo dashboard (Templates -> Template ID)
+        new_event2.title = 'Test event'
+        new_event2.city = 'San Francisco'
+        new_event2.url = 'https://www.usefomo.com'
         # Add event custom attribute value
-        new_event.add_custom_event_field('variable_name', 'value')
-        created_event = client.create_event(new_event)
+        new_event2.add_custom_event_field('variable_name', 'value')
+        created_event = client.create_event(new_event2)
         self.assertIsNotNone(created_event)
         self.assertIsNotNone(created_event.id)
         self.assertEqual('variable_name', created_event.custom_event_fields_attributes[0]['key'])
@@ -50,7 +50,15 @@ class TestFomo(unittest.TestCase):
 
         # List events
         events = client.get_events()
-        self.assertEqual(1, len(events))
+        self.assertEqual(2, len(events))
+
+        # List events with meta data
+        events_with_meta = client.get_events_with_meta(30, 1)
+        self.assertEqual(2, len(events_with_meta.events))
+        self.assertEqual(2, events_with_meta.meta.total_count)
+        self.assertEqual(30, events_with_meta.meta.per_page)
+        self.assertEqual(1, events_with_meta.meta.page)
+        self.assertEqual(1, events_with_meta.meta.total_pages)
 
         # Update event
         event.first_name = 'John'

@@ -20,6 +20,9 @@ class FomoClient:
         #: Fomo API endpoint
         self.__endpoint = 'https://www.usefomo.com'
 
+        #: SDK version
+        self.__version__ = '1.0.4'
+
     def get_event(self, event_id):
         """Get Fomo Event
 
@@ -30,14 +33,26 @@ class FomoClient:
         """
         return FomoEvent.from_json(self.__makeRequest('/api/v1/applications/me/events/' + repr(event_id), 'GET'))
 
-    def get_events(self):
-        """Get all Fomo events
+    def get_events(self, size=30, page=1):
+        """Get Fomo events
 
         :return: :class:`FomoEventList <FomoEventList>` object
         :rtype: FomoEventList
 
         """
-        return FomoEvent.list_from_json(self.__makeRequest('/api/v1/applications/me/events', 'GET'))
+        return FomoEvent.list_from_json(
+            self.__makeRequest('/api/v1/applications/me/events?per=' + repr(size) + '&page=' + repr(page), 'GET'))
+
+    def get_events_with_meta(self, size=30, page=1):
+        """Get Fomo events with meta data
+
+        :return: :class:`FomoEventsWithMeta <FomoEventsWithMeta>` object
+        :rtype: FomoEventsWithMeta
+
+        """
+        response = self.__makeRequest(
+            '/api/v1/applications/me/events?per=' + repr(size) + '&page=' + repr(page) + '&show_meta=true', 'GET')
+        return FomoEventsWithMeta.from_json(response)
 
     def delete_event(self, event_id):
         """Delete Fomo Event
@@ -59,7 +74,8 @@ class FomoClient:
         :rtype: FomoEvent
 
         """
-        return FomoEvent.from_json(self.__makeRequest('/api/v1/applications/me/events', 'POST', FomoEventWrapper(event)))
+        return FomoEvent.from_json(
+            self.__makeRequest('/api/v1/applications/me/events', 'POST', FomoEventWrapper(event)))
 
     def update_event(self, event):
         """Update Fomo Event
@@ -84,7 +100,10 @@ class FomoClient:
         @type data: FomoEventWrapper
 
         """
-        headers = {'Authorization': 'Token ' + self.__token}
+        headers = {
+            'Authorization': 'Token ' + self.__token,
+            'User-Agent': 'Fomo/Python/' + self.__version__
+        }
         if data is not None:
             headers['Content-Type'] = 'application/json'
 
@@ -92,6 +111,7 @@ class FomoClient:
                                     data=data.to_JSON() if data is not None else None,
                                     headers=headers)
         return response.text
+
 
 class FomoEventCustomAttribute(object):
     """Custom event attribute"""
@@ -112,11 +132,14 @@ class FomoEventCustomAttribute(object):
 class FomoEventBasic(object):
     """Fomo basic event"""
 
-    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="", title="",
-                 image_url="", custom_event_fields_attributes=[]):
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="",
+                 title="",
+                 image_url="", custom_event_fields_attributes=None):
         """Create a new Fomo basic event"""
 
         #: Event type unique ID (optional|required if event_type_tag = '')
+        if custom_event_fields_attributes is None:
+            custom_event_fields_attributes = []
         self.event_type_id = event_type_id
 
         #: Event type tag (optional|required if event_type_id = '')
@@ -172,13 +195,15 @@ class FomoEventBasic(object):
 class FomoEvent(FomoEventBasic):
     """Fomo event"""
 
-    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="", title="",
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", city="", province="", country="",
+                 title="",
                  image_url="", custom_event_fields_attributes=None, id="", created_at="", updated_at="", message="",
-                 link="", application_id="", created_at_to_seconds_from_epoch=None):
+                 link="", application_id="", created_at_to_seconds_from_epoch=None, template_vars=None):
         """Creates new Fomo event object"""
         if custom_event_fields_attributes is None:
             custom_event_fields_attributes = []
-        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, city, province, country, title, image_url,
+        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, city, province, country, title,
+                                image_url,
                                 custom_event_fields_attributes)
 
         #: Id of the event type (needed only for the update)
@@ -201,6 +226,9 @@ class FomoEvent(FomoEventBasic):
 
         #: Full link (received info)
         self.link = link
+
+        #: Used template variables
+        self.template_vars = template_vars
 
     def __str__(self):
         """Dumps JSON serialized object"""
@@ -256,6 +284,72 @@ class FomoEventList(list):
                           sort_keys=True)
 
 
+class FomoEventsMeta(object):
+    def __init__(self, per_page=30, page=1, total_count=0, total_pages=1):
+        """Initializes Fomo Events Meta"""
+
+        #: Page size
+        self.per_page = per_page
+
+        #: Page number
+        self.page = page
+
+        #: Total count
+        self.total_count = total_count
+
+        #: Total pages
+        self.total_pages = total_pages;
+
+    def __str__(self):
+        """Dumps JSON serialized object"""
+        return json.dumps(self.__dict__, indent=4)
+
+    @classmethod
+    def from_json(cls, json_str):
+        """Parse object from JSON"""
+        json_dict = json.loads(json_str)
+        return cls(**json_dict)
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
+
+class FomoEventsWithMeta(object):
+    def __init__(self, events=None, meta=None):
+        """Initializes Fomo Events with Meta"""
+        #: Events
+        if events is None:
+            events = []
+        self.events = events
+        #: Meta data
+        self.meta = meta
+
+    def __str__(self):
+        """Dumps JSON serialized object"""
+        return json.dumps(self.__dict__, indent=4)
+
+    @classmethod
+    def from_json(cls, json_str):
+        """Parse object from JSON"""
+        json_dict = json.loads(json_str)
+        cls.events = FomoEvent.list_from_json(json.dumps(json_dict['events']))
+        cls.meta = FomoEventsMeta.from_json(json.dumps(json_dict['meta']))
+        return cls
+
+    def __repr__(self):
+        """Dumps itself to dictionary"""
+        return json.dumps(self.__dict__)
+
+    def to_JSON(self):
+        return json.dumps(self, default=lambda o: o.__dict__,
+                          sort_keys=True)
+
+
 class FomoDeleteMessageResponse(object):
     """Fomo Delete Event response"""
 
@@ -281,6 +375,7 @@ class FomoDeleteMessageResponse(object):
     def to_JSON(self):
         return json.dumps(self, default=lambda o: o.__dict__,
                           sort_keys=True)
+
 
 class FomoEventWrapper(object):
     def __init__(self, event=None):

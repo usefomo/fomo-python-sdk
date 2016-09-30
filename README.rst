@@ -81,12 +81,24 @@ To get an event:
     print(event)
 
 
-To get all events:
+To get events:
 
 .. code-block:: python
 
-    events = client.get_events()
+    events = client.get_events(30, 1)
     print(events)
+
+
+To get events with meta data:
+
+.. code-block:: python
+
+    data = client.get_events_with_meta(30, 1)
+    print(data.events)
+    print(data.meta.per_page)
+    print(data.meta.page)
+    print(data.meta.total_count)
+    print(data.meta.total_pages)
 
 
 To delete an event:
