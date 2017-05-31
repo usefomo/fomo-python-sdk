@@ -19,7 +19,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='fomo',
-    version='1.0.4',
+    version='1.0.5',
 
     description='Fomo Python SDK is the official SDK wrapper for the Fomo API service',
     long_description=long_description,
