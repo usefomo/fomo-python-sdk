@@ -45,7 +45,8 @@ To create a new event with template name:
 .. code-block:: python
 
     event = Fomo.FomoEventBasic()
-    event.event_type_tag = 'new-order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
+    event.event_type_tag = 'new_order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
+    event.email_address = 'ryan.kulp@usefomo.com' # used to fetch Gravatar for notification image
     event.title = 'Test event'
     event.city = 'San Francisco'
     event.url = 'https://www.usefomo.com'
