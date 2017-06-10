@@ -32,7 +32,7 @@ Check out our examples in `tests/test.py <https://github.com/usefomo/fomo-python
 Basic Usage
 -----------
 
-Initialize Fomo client via:
+Initialize Fomo client:
 
 .. code-block:: python
 
@@ -40,7 +40,7 @@ Initialize Fomo client via:
     client = Fomo.FomoClient('<token>')  # Auth token can be found Fomo application admin dashboard (App -> API Access)
 
 
-To create a new event with template name:
+Create a new event with template name:
 
 .. code-block:: python
 
@@ -74,7 +74,7 @@ or with template ID:
     print(created_event)
 
 
-To get an event:
+Fetch an event:
 
 .. code-block:: python
 
@@ -82,7 +82,7 @@ To get an event:
     print(event)
 
 
-To get events:
+Get events:
 
 .. code-block:: python
 
@@ -90,7 +90,7 @@ To get events:
     print(events)
 
 
-To get events with meta data:
+Get events with meta data:
 
 .. code-block:: python
 
@@ -102,14 +102,14 @@ To get events with meta data:
     print(data.meta.total_pages)
 
 
-To delete an event:
+Delete an event:
 
 .. code-block:: python
 
     client.delete_event('<event ID>')
 
 
-To update an event:
+Update an event:
 
 .. code-block:: python
 
