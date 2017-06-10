@@ -20,6 +20,7 @@ class TestFomo(unittest.TestCase):
         new_event = Fomo.FomoEventBasic()
         new_event.event_type_tag = 'new_order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
         new_event.title = 'Test event'
+        new_event.first_name = 'Ryan'
         new_event.city = 'San Francisco'
         new_event.url = 'https://www.usefomo.com'
         # Add event custom attribute value
