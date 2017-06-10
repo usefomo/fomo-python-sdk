@@ -132,7 +132,7 @@ class FomoEventCustomAttribute(object):
 class FomoEventBasic(object):
     """Fomo basic event"""
 
-    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", email_address="", city="", province="", country="",
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", email_address="", ip_address="", city="", province="", country="",
                  title="",
                  image_url="", custom_event_fields_attributes=None):
         """Create a new Fomo basic event"""
@@ -153,6 +153,9 @@ class FomoEventBasic(object):
 
         #: Email address of the person on the event. Size range: 0..255
         self.email_address = email_address
+
+        #: IP address of the person on the event. Size range: 0..255
+        self.ip_address = ip_address
 
         #: City where the event happened. Size range: 0..255
         self.city = city
@@ -198,14 +201,14 @@ class FomoEventBasic(object):
 class FomoEvent(FomoEventBasic):
     """Fomo event"""
 
-    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", email_address="", city="", province="", country="",
+    def __init__(self, event_type_id="", event_type_tag="", url="", first_name="", email_address="", ip_address="", city="", province="", country="",
                  title="",
                  image_url="", custom_event_fields_attributes=None, id="", created_at="", updated_at="", message="",
                  link="", application_id="", created_at_to_seconds_from_epoch=None, template_vars=None):
         """Creates new Fomo event object"""
         if custom_event_fields_attributes is None:
             custom_event_fields_attributes = []
-        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, email_address, city, province, country, title,
+        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, email_address, ip_address, city, province, country, title,
                                 image_url,
                                 custom_event_fields_attributes)
 
