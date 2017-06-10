@@ -208,8 +208,8 @@ class FomoEvent(FomoEventBasic):
         """Creates new Fomo event object"""
         if custom_event_fields_attributes is None:
             custom_event_fields_attributes = []
-        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, email_address, ip_address, city, province, country, title,
-                                image_url,
+        FomoEventBasic.__init__(self, event_type_id, event_type_tag, url, first_name, email_address,
+                                ip_address, city, province, country, title, image_url,
                                 custom_event_fields_attributes)
 
         #: Id of the event type (needed only for the update)
