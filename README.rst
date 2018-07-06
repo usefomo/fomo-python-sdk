@@ -1,9 +1,9 @@
 Fomo Python SDK
 ===============
 
-*Fomo Python SDK* is the official SDK wrapper for the `Fomo API service <https://www.usefomo.com>`_
+*Fomo Python SDK* is the official SDK wrapper for the `Fomo API service <https://fomo.com>`_
 
-API docs: `http://docs.usefomo.com/reference <http://docs.usefomo.com/reference>`_
+API docs: `https://docs.fomo.com <https://docs.fomo.com>`_
 
 Requirements
 ------------
@@ -121,4 +121,4 @@ Update an event:
 Support
 -------
 
-If you have questions, email us at `hello@usefomo.com <mailto:hello@usefomo.com>`_.
+If you have questions, email us at `hello@fomo.com <mailto:hello@fomo.com>`_.
