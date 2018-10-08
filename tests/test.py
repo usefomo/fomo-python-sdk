@@ -22,7 +22,7 @@ class TestFomo(unittest.TestCase):
         new_event.title = 'Test event'
         new_event.first_name = 'Ryan'
         new_event.city = 'San Francisco'
-        new_event.url = 'https://www.usefomo.com'
+        new_event.url = 'https://www.fomo.com'
         # Add event custom attribute value
         new_event.add_custom_event_field('variable_name', 'value')
         created_event = client.create_event(new_event)
@@ -36,7 +36,7 @@ class TestFomo(unittest.TestCase):
         new_event2.event_type_id = '1894'  # Event type ID is found on Fomo dashboard (Templates -> Template ID)
         new_event2.title = 'Test event'
         new_event2.city = 'San Francisco'
-        new_event2.url = 'https://www.usefomo.com'
+        new_event2.url = 'https://www.fomo.com'
         # Add event custom attribute value
         new_event2.add_custom_event_field('variable_name', 'value')
         created_event = client.create_event(new_event2)

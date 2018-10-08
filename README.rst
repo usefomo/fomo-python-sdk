@@ -46,10 +46,10 @@ Create a new event with template name:
 
     event = Fomo.FomoEventBasic()
     event.event_type_tag = 'new_order'  # Event type tag is found on Fomo dashboard (Templates -> Template name)
-    event.email_address = 'ryan.kulp@usefomo.com' # used to fetch Gravatar for notification image
+    event.email_address = 'ryan.kulp@fomo.com' # used to fetch Gravatar for notification image
     event.title = 'Test event'
     event.city = 'San Francisco'
-    event.url = 'https://www.usefomo.com'
+    event.url = 'https://www.fomo.com'
 
     # Add event custom attribute value
     event.add_custom_event_field('variable_name', 'value')
@@ -65,7 +65,7 @@ or with template ID:
     event.event_type_id = '183'  # Event type ID is found on Fomo dashboard (Templates -> Template ID)
     event.title = 'Test event'
     event.city = 'San Francisco'
-    event.url = 'https://www.usefomo.com'
+    event.url = 'https://www.fomo.com'
 
     # Add event custom attribute value
     event.add_custom_event_field('variable_name', 'value')

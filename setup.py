@@ -1,7 +1,7 @@
 """Fomo Python SDK is the official SDK wrapper for the Fomo API service
 
 See:
-https://www.usefomo.com
+https://fomo.com
 https://github.com/usefomo/fomo-python-sdk
 """
 
@@ -29,7 +29,7 @@ setup(
 
     # Author details
     author='Fomo',
-    author_email='hello@usefomo.com',
+    author_email='hello@fomo.com',
 
     # Choose your license
     license='MIT',
