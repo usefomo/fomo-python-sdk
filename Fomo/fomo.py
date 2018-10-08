@@ -18,10 +18,10 @@ class FomoClient:
         self.__token = token
 
         #: Fomo API endpoint
-        self.__endpoint = 'https://www.usefomo.com'
+        self.__endpoint = 'https://api.fomo.com'
 
         #: SDK version
-        self.__version__ = '1.0.4'
+        self.__version__ = '1.1.0'
 
     def get_event(self, event_id):
         """Get Fomo Event
