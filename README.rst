@@ -113,6 +113,7 @@ Update an event:
 
 .. code-block:: python
 
+    event = client.get_event('<event ID>')
     event['first_name'] = 'Donny'
     event['custom_event_fields_attributes'] = { 'amount': 19.99 }
 
