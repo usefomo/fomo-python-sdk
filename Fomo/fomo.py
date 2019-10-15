@@ -1,5 +1,4 @@
 import json
-
 import requests
 
 try:
@@ -21,7 +20,7 @@ class FomoClient:
         self.__endpoint = 'https://api.fomo.com'
 
         #: SDK version
-        self.__version__ = '1.2.1'
+        self.__version__ = '1.2.2'
 
     def get_event(self, event_id):
         """Get Fomo Event
@@ -71,7 +70,7 @@ class FomoClient:
         :return: :class:`FomoEvent <FomoEvent>` object
         :rtype: FomoEvent
         """
-        return json.loads(self.__makeRequest('/api/v1/applications/me/events/' + repr(event.id), 'PATCH', FomoEventWrapper(event)))
+        return json.loads(self.__makeRequest('/api/v1/applications/me/events/' + repr(event['id']), 'PATCH', FomoEventWrapper(event)))
 
     def __makeRequest(self, path, method, data=None):
         """Make Fomo Authorized API request
